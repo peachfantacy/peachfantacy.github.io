@@ -13,7 +13,7 @@
     />
     <style>
       body {
-        background: url("./imgs/bg.jpg") no-repeat center center fixed;
+        background: url("./imgs/bg2.jpg") no-repeat center center fixed;
         background-size: cover;
         margin: 0;
         padding: 0;
@@ -65,21 +65,37 @@
         box-sizing: border-box;
         font-style: normal;
         font-weight: 400;
+        align-items: center;
       }
       .dns-list li span {
         color: #fff;
-        font-size: 18px;
+        font-size: 16px;
         display: inline-block;
         width: 120px;
-        height: 39px;
+        height: 42px;
         border-radius: 20px;
         background: rgba(134, 36, 36, 0.54);
         text-align: center;
-        line-height: 39px;
+        line-height: 42px;
         padding: 0 10px;
+        font-weight: 300;
+        min-height: 42px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
       }
       .dns-list li span.dns-mian-line {
         background: linear-gradient(0deg, #f44fad 0%, #fe98d2 100%);
+      }
+      .dns-list li span.dns-type {
+        height: auto;
+        height: fit-content;
+        line-height: normal;
+      }
+      .dns-list li a {
+        color: #448dfb;
+        font-size: 28px;
+        font-weight: 300;
       }
       #lang-menu {
         display: none;
@@ -115,6 +131,9 @@
           right: 0;
           left: 10% !important;
         }
+      }
+      a {
+        text-decoration: none;
       }
     </style>
   </head>
@@ -160,9 +179,9 @@
     <div class="content">
       <h6>收藏关注不迷路</h6>
       <ul class="dns-list">
-        <li><span class="dns-mian-line">主线路</span>https://aifk.ai/cn</li>
+        <!-- <li><span class="dns-mian-line">主线路</span>https://aifk.ai/cn</li>
         <li><span class="dns-type">备用线路1</span>https://aifk.ai/cn</li>
-        <li><span class="dns-type">备用线路2</span>https://aifk.ai/cn</li>
+        <li><span class="dns-type">备用线路2</span>https://aifk.ai/cn</li> -->
       </ul>
     </div>
   </body>
@@ -226,6 +245,32 @@
     });
     // 页面加载时根据参数切换
     const langParam = getQueryParam("lang") || "en";
+
+    const hosts = [
+      {
+        name: "主线路",
+        url: `https://peachfantacy.ai/${langParam}`,
+      },
+      {
+        name: "备用线路1",
+        url: `https://peachfantacy.ai/${langParam}`,
+      },
+      {
+        name: "备用线路2",
+        url: `https://peachfantacy.ai/${langParam}`,
+      },
+    ];
+
+    const dnsList = document.querySelector(".dns-list");
+    hosts.forEach((host) => {
+      const li = document.createElement("li");
+      li.innerHTML = `<span class=${
+        host.name === "主线路" ? "dns-mian-line" : "dns-type"
+      }>${host.name}</span><a href="${host.url}" target="_blank">${
+        host.url
+      }</a>`;
+      dnsList.appendChild(li);
+    });
     setLang(langParam);
   </script>
 </html>
