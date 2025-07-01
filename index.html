@@ -104,12 +104,12 @@
         font-weight: 300;
       }
       #lang-menu {
-        display: none;
         position: absolute;
         z-index: 1000;
         background: #fff;
         margin-top: 10px;
         right: 0;
+        top: 40px;
         border-radius: 6px;
         width: 180px;
         /* shadow */
@@ -124,6 +124,9 @@
         font-weight: 500;
         line-height: 20px;
         border-bottom: 1px solid #e9e9e9;
+      }
+      .lang-option:hover {
+        opacity: 0.8;
       }
       .lang-option:last-child {
         border-bottom: 0;
@@ -148,7 +151,7 @@
       <img src="./imgs/logo.svg" alt="logo" class="logo" />
       <div
         class="lang-selector"
-        style="position: relative; display: inline-block"
+        style="position: relative; display: inline-block; height: fit-content"
       >
         <img
           src="./imgs/lang.svg"
@@ -192,12 +195,34 @@
     </div>
   </body>
   <script>
-    const langBtn = document.getElementById("lang-btn");
+    const langBtn = document.querySelector(".lang-selector");
     const langMenu = document.getElementById("lang-menu");
-    langBtn.onclick = () => {
-      langMenu.style.display =
-        langMenu.style.display === "block" ? "none" : "block";
+
+    // 鼠标进入显示菜单
+    langBtn.onmouseenter = () => {
+      langMenu.style.display = "block";
+      langBtn.style.height = "200px";
     };
+
+    // 鼠标离开隐藏菜单
+    langBtn.onmouseleave = () => {
+      langMenu.style.display = "none";
+      langBtn.style.height = "fit-content";
+    };
+
+    // 鼠标进入菜单时保持显示
+    langMenu.onmouseenter = () => {
+      langMenu.style.display = "block";
+      langBtn.style.height = "200px";
+    };
+
+    // 鼠标离开菜单时隐藏
+    langMenu.onmouseleave = () => {
+      langMenu.style.display = "none";
+      langBtn.style.height = "fit-content";
+    };
+
+    // 点击外部区域隐藏菜单
     document.addEventListener("click", function (e) {
       if (!langBtn.contains(e.target) && !langMenu.contains(e.target)) {
         langMenu.style.display = "none";
