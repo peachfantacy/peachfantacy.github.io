@@ -15,7 +15,6 @@
       html,
       body {
         overscroll-behavior: none;
-        overflow: hidden;
         touch-action: none;
       }
       body {
@@ -112,17 +111,24 @@
         font-size: 16px;
         font-weight: 300;
       }
+      .lang-selector {
+        position: relative;
+        display: inline-block;
+        /* height: fit-content;  // 移除高度限制 */
+      }
       #lang-menu {
         position: absolute;
         z-index: 1000;
         background: #fff;
         margin-top: 10px;
         right: 0;
-        top: 40px;
+        top: 30px; /* 让菜单紧贴按钮下方，30px为按钮高度 */
         border-radius: 6px;
         width: 180px;
-        /* shadow */
         box-shadow: 0px 4px 6px 0px rgba(0, 0, 0, 0.09);
+      }
+      .lang-selector {
+        height: fit-content;
       }
       .lang-option {
         color: var(--Text-2, #5e5e5e);
@@ -186,6 +192,34 @@
           </div>
           <div
             class="lang-option"
+            data-lang="de"
+            style="padding: 12px 24px; cursor: pointer"
+          >
+            Deutsch
+          </div>
+          <div
+            class="lang-option"
+            data-lang="fr"
+            style="padding: 12px 24px; cursor: pointer"
+          >
+            Français
+          </div>
+          <div
+            class="lang-option"
+            data-lang="es"
+            style="padding: 12px 24px; cursor: pointer"
+          >
+            Español
+          </div>
+          <div
+            class="lang-option"
+            data-lang="ru"
+            style="padding: 12px 24px; cursor: pointer"
+          >
+            Русский
+          </div>
+          <div
+            class="lang-option"
             data-lang="id"
             style="padding: 12px 24px; cursor: pointer"
           >
@@ -196,47 +230,28 @@
     </div>
     <div class="content">
       <h6>收藏关注不迷路</h6>
-      <ul class="dns-list">
-        <!-- <li><span class="dns-mian-line">主线路</span>https://aifk.ai/cn</li>
-        <li><span class="dns-type">备用线路1</span>https://aifk.ai/cn</li>
-        <li><span class="dns-type">备用线路2</span>https://aifk.ai/cn</li> -->
-      </ul>
+      <ul class="dns-list"></ul>
     </div>
   </body>
   <script>
-    const langBtn = document.querySelector(".lang-selector");
+    const langSelector = document.querySelector(".lang-selector");
     const langMenu = document.getElementById("lang-menu");
 
-    // 鼠标进入显示菜单
-    langBtn.onmouseenter = () => {
+    // 只监听 lang-selector
+    langSelector.onmouseenter = () => {
       langMenu.style.display = "block";
-      langBtn.style.height = "200px";
     };
-
-    // 鼠标离开隐藏菜单
-    langBtn.onmouseleave = () => {
+    langSelector.onmouseleave = () => {
       langMenu.style.display = "none";
-      langBtn.style.height = "fit-content";
-    };
-
-    // 鼠标进入菜单时保持显示
-    langMenu.onmouseenter = () => {
-      langMenu.style.display = "block";
-      langBtn.style.height = "200px";
-    };
-
-    // 鼠标离开菜单时隐藏
-    langMenu.onmouseleave = () => {
-      langMenu.style.display = "none";
-      langBtn.style.height = "fit-content";
     };
 
     // 点击外部区域隐藏菜单
     document.addEventListener("click", function (e) {
-      if (!langBtn.contains(e.target) && !langMenu.contains(e.target)) {
+      if (!langSelector.contains(e.target)) {
         langMenu.style.display = "none";
       }
     });
+
     // 语言包
     const LANGS = {
       cn: {
@@ -250,6 +265,30 @@
         main: "Main Line",
         backup1: "Backup Line 1",
         backup2: "Backup Line 2",
+      },
+      de: {
+        title: "Lesezeichen setzen, um nicht verloren zu gehen",
+        main: "Hauptleitung",
+        backup1: "Backup-Leitung 1",
+        backup2: "Backup-Leitung 2",
+      },
+      fr: {
+        title: "Marquez-nous pour ne jamais vous perdre",
+        main: "Ligne principale",
+        backup1: "Ligne de secours 1",
+        backup2: "Ligne de secours 2",
+      },
+      es: {
+        title: "Marcanos para no perderte nunca",
+        main: "Línea principal",
+        backup1: "Línea de respaldo 1",
+        backup2: "Línea de respaldo 2",
+      },
+      ru: {
+        title: "Добавьте нас в закладки, чтобы не заблудиться",
+        main: "Основная линия",
+        backup1: "Резервная линия 1",
+        backup2: "Резервная линия 2",
       },
       id: {
         title: "Bookmark agar tidak tersesat",
